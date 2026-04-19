@@ -44,7 +44,7 @@ public class ProcessingController {
             @RequestParam("tool") String tool
     ) throws Exception {
 
-      Job job = service.process(file, signature, tool);
+       Job job = service.process(file, signature, tool);
     	
        JobResponse res = new JobResponse();
        res.setId(job.getId());

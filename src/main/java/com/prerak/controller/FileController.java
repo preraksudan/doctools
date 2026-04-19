@@ -22,6 +22,9 @@ public class FileController {
         this.rootLocation = Paths.get(config.outputDir).toAbsolutePath().normalize();
     }
 
+    /*
+     * Check if this can be refactored again. to make it modular to handle diff. file types and move business logic. 
+    */
     @GetMapping("/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         try {
