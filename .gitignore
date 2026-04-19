@@ -8,6 +8,16 @@ out/
 bin/
 *.jar
 *.war
+uploads/*
+outputs/*
+
+!uploads/.gitkeep
+!outputs/.gitkeep
+
+touch uploads/.gitkeep
+touch outputs/.gitkeep
+
+
 
 ### STS ###
 .apt_generated
