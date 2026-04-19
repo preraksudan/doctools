@@ -1,5 +1,6 @@
 package com.prerak.strategy;
 
+import com.prerak.entity.Job;
 import org.apache.pdfbox.pdmodel.*;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
@@ -18,12 +19,14 @@ public class ImageToPdfStrategy implements ProcessingStrategy {
 
     // Main process method (No Signature)
     @Override
-    public String process(File inputFile) throws Exception {
-        return processWithSignature(inputFile, null);
+    public String process(File inputFile,File optionalFile) throws Exception {
+        return processWithSignature(inputFile, optionalFile);
     }
 
     // Overloaded method to handle the Signature logic
     public String processWithSignature(File inputFile, File signatureFile) throws Exception {
+    	
+    	// handle input file and signature file using Job entity
         Files.createDirectories(Paths.get(outputDir));
         String outputPath = outputDir + System.currentTimeMillis() + ".pdf";
 
@@ -68,4 +71,10 @@ public class ImageToPdfStrategy implements ProcessingStrategy {
         // Draw the signature on top of the existing content
         contentStream.drawImage(signature, x, y, sigWidth, sigHeight);
     }
+
+	@Override
+	public String process(File mainFile) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

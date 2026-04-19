@@ -30,11 +30,12 @@ public class AsyncProcessingService {
     	this.jobRepository=jobRepository;
     	this.factory = factory;
     }
+    
     @Value("${app.base-url}")
     private String baseUrl;
 
     @Async
-    public void processJob(Long jobId) {
+    public void processJob(Long jobId) {// ****
 
         Job job = jobRepository.findById(jobId)
                 .orElseThrow(() -> {
@@ -48,16 +49,20 @@ public class AsyncProcessingService {
             job.setStatus(JobStatus.PROCESSING);
             jobRepository.save(job);
 
+            // 3. Get the right tool (e.g., "IMAGE_TO_PDF") and run it
             ProcessingStrategy strategy = factory.get(job.getToolType());
 
+            
             File mainFile = new File(job.getInputPath());
-
+            // use this optional file.
             File optionalFile = job.getSignaturePath() != null
                     ? new File(job.getSignaturePath())
                     : null;
 
-            String outputPath = strategy.process(mainFile);
-
+            // String outputPath = strategy.process(mainFile);// accomodate file another one...            
+             String outputPath = strategy.process(mainFile, optionalFile);// accomodate file another one... *** handle this..
+                       
+            
             String fileName = Paths.get(outputPath).getFileName().toString();
             String fileUrl = baseUrl + "/files/" + fileName;
 
